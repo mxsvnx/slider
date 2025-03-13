@@ -1,4 +1,3 @@
-// Инициализация переменных
 const blockMin = document.getElementById('blockMin');
 const blockMax = document.getElementById('blockMax');
 const colorRange = document.getElementById('colorRange');
