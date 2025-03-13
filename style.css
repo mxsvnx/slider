@@ -1,0 +1,128 @@
+* {
+    background-color: #ddd;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.filter {
+    display: flex;
+    align-items: center; 
+    width: 1200px; 
+    padding: 30px;
+    user-select: none;
+}
+
+.switcher-container {
+    display: flex;
+    flex-direction: column; 
+    margin-right: 20px; 
+}
+
+.switcher-container button {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #3962df;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px 0; 
+    width: 100px; 
+    text-align: center;
+}
+
+.switcher-container button.active {
+    color: #2a4bbf; 
+}
+
+.slider-container {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+}
+
+.slider {
+    position: relative;
+    height: 4px;
+    background: #ccc;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.color-range {
+    position: absolute;
+    background: #3962df;
+    height: 4px;
+    border: none;
+}
+
+.block-min,
+.block-max {
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    top: -5px;
+    background: #ffffff;
+    border: 3px solid #3962df;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.block-max {
+    left: calc(100% - 20px); 
+}
+
+.labels-container {
+    position: relative;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 12px;
+    color: #888;
+}
+
+.labels-container span {
+    position: absolute;
+    transform: translateX(-50%); 
+}
+
+.labels-container span.year {
+    color: #000;
+    font-weight: bold; 
+}
+
+.labels-container span.month {
+    color: #888; 
+}
+
+.indicator {
+    position: absolute;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #3962df;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+    z-index: 10;
+    transform: translateX(-50%);
+}
+
+.block-min .indicator {
+    top: -40px; 
+}
+
+.block-max .indicator {
+    top: 30px; 
+}

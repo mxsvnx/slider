@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="adapt.css">
+    <title>Slider</title>
+</head>
+<body>
+    <div class="filter">
+        <div class="switcher-container">
+            <button id="showYears">Все Года</button>
+            <button id="showMonths">Месяца</button>
+        </div>
+        <div class="slider-container">
+            <div class="slider">
+                <div id="blockMin" class="block-min" onMouseDown="moveRange(this)" onTouchStart="moveRange(this)"></div>
+                <div id="colorRange" class="color-range"></div>
+                <div id="blockMax" class="block-max" onMouseDown="moveRange(this)" onTouchStart="moveRange(this)"></div>
+            </div>
+            <div class="labels-container"></div> 
+        </div>
+    </div>
+<script src="script.js"></script>
+</body>
+</html>
