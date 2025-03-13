@@ -3,27 +3,25 @@ const blockMin = document.getElementById('blockMin');
 const blockMax = document.getElementById('blockMax');
 const colorRange = document.getElementById('colorRange');
 const slider = document.querySelector('.slider');
-const labelsContainer = document.querySelector('.labels-container'); // Контейнер для делений
-const showYearsButton = document.getElementById('showYears'); // Кнопка "Все года"
-const showMonthsButton = document.getElementById('showMonths'); // Кнопка "Месяца"
-let rangeMin = 2014; // Минимальное значение (первый год)
-let rangeMax = 2021; // Максимальное значение (последний год)
+const labelsContainer = document.querySelector('.labels-container'); 
+const showYearsButton = document.getElementById('showYears'); 
+const showMonthsButton = document.getElementById('showMonths'); 
+let rangeMin = 2014; 
+let rangeMax = 2021; 
 
-let currentMode = 'years'; // Режим отображения: 'years' или 'months'
+let currentMode = 'years'; 
 
-// Функция для создания делений (годы или месяцы)
 function createLabels() {
-    labelsContainer.innerHTML = ''; // Очищаем контейнер
+    labelsContainer.innerHTML = ''; 
 
-    const sliderWidth = slider.offsetWidth; // Ширина слайдера
+    const sliderWidth = slider.offsetWidth; 
 
     if (currentMode === 'months') {
-        // Режим месяцев (2015–2016)
         const monthsShort = [
             "янв", "фев", "мар", "апр", "май", "июн",
             "июл", "авг", "сен", "окт", "ноя", "дек"
         ];
-        const totalMonths = (2016 - 2015 + 1) * 12; // Общее количество месяцев (2015–2016)
+        const totalMonths = (2016 - 2015 + 1) * 12;
 
         for (let i = 0; i < totalMonths; i++) {
             const monthElement = document.createElement('span');
@@ -31,37 +29,32 @@ function createLabels() {
             const month = monthsShort[i % 12];
             monthElement.textContent = month;
 
-            // Добавляем класс в зависимости от того, год это или месяц
             if (i % 12 === 0) {
-                monthElement.classList.add('year'); // Год
-                monthElement.textContent = year; // Отображаем год
+                monthElement.classList.add('year'); 
+                monthElement.textContent = year; 
             } else {
-                monthElement.classList.add('month'); // Месяц
+                monthElement.classList.add('month'); 
             }
 
-            // Рассчитываем позицию для деления
             const monthPosition = (i / (totalMonths - 1)) * sliderWidth;
             monthElement.style.left = `${monthPosition}px`;
 
             labelsContainer.appendChild(monthElement);
         }
 
-        // Добавляем 2017 год в конец
         const year2017 = document.createElement('span');
         year2017.textContent = 2017;
-        year2017.classList.add('year'); // Добавляем класс для года
-        year2017.style.left = `${sliderWidth}px`; // Позиция в конце слайдера
+        year2017.classList.add('year'); 
+        year2017.style.left = `${sliderWidth}px`; 
         labelsContainer.appendChild(year2017);
     } else {
-        // Режим годов (2014–2021)
-        const totalYears = rangeMax - rangeMin + 1; // Общее количество лет
+        const totalYears = rangeMax - rangeMin + 1; 
 
         for (let year = rangeMin; year <= rangeMax; year++) {
             const yearElement = document.createElement('span');
             yearElement.textContent = year;
-            yearElement.classList.add('year'); // Добавляем класс для года
+            yearElement.classList.add('year'); 
 
-            // Рассчитываем позицию для деления
             const yearPosition = ((year - rangeMin) / (totalYears - 1)) * sliderWidth;
             yearElement.style.left = `${yearPosition}px`;
 
@@ -70,27 +63,24 @@ function createLabels() {
     }
 }
 
-// Обработчик для кнопки "Все года"
 showYearsButton.addEventListener('click', () => {
-    currentMode = 'years'; // Переключаем режим на годы
-    rangeMin = 2014; // Возвращаем диапазон к 2014–2021
+    currentMode = 'years'; 
+    rangeMin = 2014;
     rangeMax = 2021;
-    showYearsButton.classList.add('active'); // Делаем кнопку активной
-    showMonthsButton.classList.remove('active'); // Делаем другую кнопку неактивной
-    createLabels(); // Обновляем деления
+    showYearsButton.classList.add('active'); 
+    showMonthsButton.classList.remove('active'); 
+    createLabels();
 });
 
-// Обработчик для кнопки "Месяца"
 showMonthsButton.addEventListener('click', () => {
-    currentMode = 'months'; // Переключаем режим на месяцы
-    rangeMin = 2015; // Устанавливаем диапазон 2015–2016
+    currentMode = 'months';
+    rangeMin = 2015; 
     rangeMax = 2016;
-    showMonthsButton.classList.add('active'); // Делаем кнопку активной
-    showYearsButton.classList.remove('active'); // Делаем другую кнопку неактивной
-    createLabels(); // Обновляем деления
+    showMonthsButton.classList.add('active'); 
+    showYearsButton.classList.remove('active');
+    createLabels(); 
 });
 
-// Получаем координаты элемента
 function getCoords(elem) {
     const rect = elem.getBoundingClientRect();
     return {
@@ -101,7 +91,6 @@ function getCoords(elem) {
     };
 }
 
-// Функция для перемещения ползунка
 function moveRange(elem) {
     const parent = {
         element: elem.parentElement,
@@ -116,15 +105,14 @@ function moveRange(elem) {
         coords: getCoords(blockMin)
     };
 
-    const isMin = elem.classList.contains('block-min'); // true, если это blockMin, иначе false
+    const isMin = elem.classList.contains('block-min');
     const indicator = document.createElement('div');
-    indicator.classList.add('indicator'); // Добавляем класс для стилизации
+    indicator.classList.add('indicator'); 
     if (elem.children.length) {
         elem.innerHTML = '';
     }
     elem.appendChild(indicator);
 
-    // Обработчики событий
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
     document.addEventListener('touchmove', onMouseMove);
@@ -136,51 +124,42 @@ function moveRange(elem) {
         e.preventDefault();
         const pos = e.touches === undefined ? e.clientX : e.targetTouches[0].clientX;
 
-        // Учитываем половину ширины ползунка для корректного позиционирования
         const halfWidth = elem.offsetWidth / 2;
         let newLeft = pos - parent.coords.left - halfWidth;
 
-        // Ограничиваем движение ползунка в пределах слайдера
         const rightEdge = parent.coords.width - elem.offsetWidth;
 
         if (newLeft < -halfWidth) {
-            newLeft = -halfWidth; // Центральная точка доходит до левого края
+            newLeft = -halfWidth; 
         } else if (newLeft > rightEdge + halfWidth) {
-            newLeft = rightEdge + halfWidth; // Центральная точка доходит до правого края
+            newLeft = rightEdge + halfWidth;
         }
 
-        // Ограничиваем движение ползунков, чтобы они не пересекались
         if (isMin && pos > block2.coords.left) {
             newLeft = block2.coords.left - parent.coords.left - elem.offsetWidth;
         } else if (!isMin && pos < block2.coords.left + block2.coords.width) {
             newLeft = block2.coords.left - parent.coords.left + block2.coords.width;
         }
 
-        // Устанавливаем новую позицию ползунка
         elem.style.left = `${newLeft}px`;
 
-        // Вычисляем месяц и год
         const monthsFull = [
             "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
             "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
         ];
-        const totalMonths = (rangeMax - rangeMin + 1) * 12; // Общее количество месяцев
+        const totalMonths = (rangeMax - rangeMin + 1) * 12; 
         let monthIndex = Math.floor((newLeft / parent.coords.width) * totalMonths);
 
-        // Ограничиваем monthIndex, чтобы он не выходил за пределы
         monthIndex = Math.min(Math.max(monthIndex, 0), totalMonths - 1);
 
         const year = rangeMin + Math.floor(monthIndex / 12);
         const month = monthsFull[monthIndex % 12];
         const displayValue = `${month} ${year}`;
 
-        // Обновляем индикатор
         indicator.style.left = `${-elem.offsetWidth / 2}px`;
 
-        // Отображаем месяц и год
         indicator.innerHTML = displayValue;
 
-        // Обновляем цветную плашечку
         if (isMin) {
             colorRange.style.left = `${newLeft + elem.offsetWidth}px`;
             colorRange.style.width = `${block2.coords.left - parent.coords.left - newLeft - elem.offsetWidth}px`;
@@ -198,17 +177,16 @@ function moveRange(elem) {
     }
 }
 
-// Инициализация ползунков и делений при загрузке страницы
 window.addEventListener('load', () => {
-    createLabels(); // Создаем деления (годы по умолчанию)
-    showYearsButton.classList.add('active'); // Делаем кнопку "Все года" активной по умолчанию
+    createLabels(); 
+    showYearsButton.classList.add('active'); 
 
-    // Инициализация синей плашки
-    const sliderWidth = slider.offsetWidth; // Ширина слайдера
-    const blockMinLeft = blockMin.offsetLeft; // Позиция левого бегунка
-    const blockMaxLeft = blockMax.offsetLeft; // Позиция правого бегунка
 
-    // Устанавливаем начальное положение и ширину синей плашки
+    const sliderWidth = slider.offsetWidth; 
+    const blockMinLeft = blockMin.offsetLeft;
+    const blockMaxLeft = blockMax.offsetLeft; 
+
+
     colorRange.style.left = `${blockMinLeft}px`;
     colorRange.style.width = `${blockMaxLeft - blockMinLeft}px`;
 });
